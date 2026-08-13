@@ -3,39 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Novel Reader</title>
 
 <style>
+
+/* =========================
+   COLOR SYSTEM
+========================= */
+
 :root{
- --bg:#f4f1ea;
- --card:#fffdf8;
- --text:#292722;
- --muted:#716c62;
- --border:#d8d1c5;
- --accent:#6f4e37;
- --danger:#a33b32;
+ --bg:#080b18;
+ --card:#10152a;
+ --card2:#141a33;
+
+ --text:#eeeaff;
+ --muted:#9da5c7;
+
+ --border:#252c50;
+
+ --accent:#7657d9;
+ --accent2:#3d63c9;
+ --accentHover:#896be8;
+
+ --danger:#b94a61;
+
  --size:20px;
 }
 
-body.dark{
- --bg:#171717;
- --card:#202020;
- --text:#e8e4dc;
- --muted:#aaa59c;
- --border:#3a3936;
- --accent:#c4a27b;
-}
+
+/* =========================
+   BASE
+========================= */
 
 *{
  box-sizing:border-box;
 }
 
+html{
+ scroll-behavior:smooth;
+}
+
 body{
  margin:0;
- background:var(--bg);
+ background:
+ radial-gradient(
+  circle at top right,
+  #171b3b 0%,
+  #080b18 45%,
+  #050711 100%
+ );
  color:var(--text);
- font-family:Georgia,"Times New Roman",serif;
- transition:.2s;
+
+ font-family:
+ Georgia,
+ "Times New Roman",
+ serif;
+
+ min-height:100vh;
+
+ transition:
+ background .25s,
+ color .25s;
 }
 
 button,
@@ -48,25 +77,45 @@ button{
  cursor:pointer;
 }
 
+.hidden{
+ display:none!important;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
 .top{
  position:sticky;
  top:0;
- z-index:10;
+ z-index:20;
+
  height:62px;
+
  display:flex;
  align-items:center;
  justify-content:space-between;
+
  padding:0 14px;
- background:var(--card);
+
+ background:#0c1023eF;
+
+ backdrop-filter:blur(12px);
+
  border-bottom:1px solid var(--border);
 }
 
 .brand{
  border:0;
  background:none;
+
  color:var(--text);
+
  font-weight:bold;
  font-size:18px;
+
+ padding:8px;
 }
 
 .tools{
@@ -75,41 +124,85 @@ button{
 }
 
 .btn{
- border:1px solid var(--border);
- background:var(--card);
- color:var(--text);
- border-radius:9px;
  min-width:40px;
  height:40px;
+
+ border:1px solid var(--border);
+
+ background:var(--card);
+ color:var(--text);
+
+ border-radius:9px;
+
+ transition:.15s;
 }
+
+.btn:hover{
+ border-color:var(--accent);
+ background:var(--card2);
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
 
 main{
  width:min(1000px,calc(100% - 20px));
+
  margin:auto;
- padding:22px 0 60px;
+
+ padding:22px 0 70px;
 }
 
-.hidden{
- display:none!important;
-}
+
+/* =========================
+   PANELS
+========================= */
 
 .hero,
 .reader,
 .novel-head,
 .editor{
- background:var(--card);
+
+ background:
+ linear-gradient(
+  145deg,
+  rgba(20,26,51,.96),
+  rgba(11,15,34,.98)
+ );
+
  border:1px solid var(--border);
- border-radius:16px;
+
+ border-radius:18px;
+
  padding:22px;
- box-shadow:0 8px 25px #00000010;
+
+ box-shadow:
+ 0 15px 45px rgba(0,0,0,.35);
 }
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
  display:flex;
  justify-content:space-between;
  align-items:center;
- gap:15px;
+
+ gap:18px;
 }
+
+.hero h1{
+ margin-bottom:8px;
+}
+
+
+/* =========================
+   TEXT
+========================= */
 
 h1,
 h2{
@@ -120,41 +213,118 @@ h2{
  color:var(--muted);
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
+
 .primary{
- background:var(--accent);
+
+ background:
+ linear-gradient(
+  135deg,
+  var(--accent),
+  var(--accent2)
+ );
+
  color:white;
+
  border:0;
+
  border-radius:10px;
+
  padding:13px 18px;
+
  white-space:nowrap;
+
+ box-shadow:
+ 0 6px 20px rgba(70,70,180,.25);
+
+ transition:.15s;
+}
+
+.primary:hover{
+ background:
+ linear-gradient(
+  135deg,
+  var(--accentHover),
+  #4d72db
+ );
+
+ transform:translateY(-1px);
 }
 
 .secondary{
- background:var(--bg);
+
+ background:#0c1125;
+
  color:var(--text);
+
  border:1px solid var(--border);
+
  border-radius:9px;
+
  padding:10px 14px;
 }
 
+.secondary:hover{
+ border-color:var(--accent);
+}
+
 .danger{
- color:var(--danger);
- border-color:var(--danger);
+ color:#e98296;
+
+ border-color:#713342;
+
  padding:9px 12px;
 }
 
+
+/* =========================
+   LIBRARY
+========================= */
+
 .grid{
+
  display:grid;
- grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+
+ grid-template-columns:
+ repeat(
+  auto-fill,
+  minmax(250px,1fr)
+ );
+
  gap:15px;
+
  margin-top:20px;
 }
 
 .card{
- background:var(--card);
+
+ background:
+ linear-gradient(
+  145deg,
+  #141a35,
+  #0d1227
+ );
+
  border:1px solid var(--border);
- border-radius:14px;
+
+ border-radius:15px;
+
  padding:18px;
+
+ transition:.18s;
+}
+
+.card:hover{
+
+ border-color:#3b4677;
+
+ transform:translateY(-2px);
+
+ box-shadow:
+ 0 12px 30px rgba(0,0,0,.25);
 }
 
 .card h2{
@@ -162,260 +332,523 @@ h2{
 }
 
 .card-actions{
+
  display:flex;
+
  gap:8px;
+
  margin-top:18px;
 }
 
 .card-actions button{
+
  flex:1;
+
  padding:10px;
+
  border-radius:9px;
 }
 
 .continue{
- background:var(--accent);
+
+ background:
+ linear-gradient(
+  135deg,
+  var(--accent),
+  var(--accent2)
+ );
+
  color:white;
+
  border:0;
 }
 
+
+/* =========================
+   EMPTY STATE
+========================= */
+
 .empty{
+
  text-align:center;
- padding:60px 15px;
+
+ padding:65px 15px;
+
  color:var(--muted);
 }
+
+.empty h2{
+ color:var(--text);
+}
+
+
+/* =========================
+   BACK
+========================= */
 
 .back{
  margin-bottom:15px;
 }
 
+
+/* =========================
+   NOVEL HEADER
+========================= */
+
 .novel-head{
+
  display:flex;
+
  justify-content:space-between;
+
  gap:15px;
+
  margin-bottom:20px;
 }
 
+
+/* =========================
+   CHAPTER LIST
+========================= */
+
 .chapter{
+
  width:100%;
+
  display:flex;
+
  gap:12px;
+
  align-items:center;
+
  text-align:left;
- background:var(--card);
+
+ background:
+ linear-gradient(
+  135deg,
+  #121832,
+  #0d1228
+ );
+
  color:var(--text);
+
  border:1px solid var(--border);
- border-radius:10px;
+
+ border-radius:11px;
+
  padding:14px;
+
  margin-bottom:8px;
+
+ transition:.15s;
 }
 
 .chapter:hover{
+
  border-color:var(--accent);
+
+ background:#151b38;
 }
 
 .num{
- color:var(--accent);
+
+ color:#9a7df0;
+
  font-weight:bold;
+
  min-width:50px;
 }
 
 .name{
+
  flex:1;
+
+ overflow:hidden;
+
+ text-overflow:ellipsis;
 }
 
 .chapter-actions{
+
  display:flex;
+
  gap:6px;
 }
 
 .small-btn{
+
  border:1px solid var(--border);
- background:var(--bg);
+
+ background:#0a0f22;
+
  color:var(--text);
+
  border-radius:7px;
+
  padding:6px 9px;
 }
 
+.small-btn:hover{
+
+ border-color:var(--accent);
+
+ color:white;
+}
+
+
+/* =========================
+   READER
+========================= */
+
 .reader{
+
  max-width:850px;
+
  margin:auto;
- padding:clamp(20px,5vw,55px);
+
+ padding:
+ clamp(20px,5vw,55px);
 }
 
 .reader-tools{
+
  display:flex;
+
  gap:5px;
+
  margin-bottom:45px;
 }
 
 .heading{
+
  text-align:left;
- margin-bottom:35px;
+
+ margin-bottom:38px;
 }
 
 .heading .label{
- color:var(--accent);
+
+ color:#9074ed;
+
  font:bold 13px Arial;
+
+ letter-spacing:1.5px;
 }
 
 .heading h1{
- font-size:clamp(30px,6vw,46px);
+
+ font-size:
+ clamp(30px,6vw,46px);
+
+ line-height:1.15;
+
  margin:8px 0;
+
+ color:#f3efff;
 }
 
-.subtitle{
- color:var(--muted);
- font-size:21px;
-}
+
+/* =========================
+   CONTENT
+========================= */
 
 .content{
+
  text-align:left;
+
  font-size:var(--size);
+
  line-height:1.95;
+
  user-select:text;
+
  -webkit-user-select:text;
+
+ color:#e9e7f2;
 }
 
 .content p{
- margin:0 0 1.35em;
+
+ margin:
+ 0 0 1.35em;
+
  white-space:pre-wrap;
 }
 
+
+/* =========================
+   READER NAVIGATION
+========================= */
+
 .nav{
+
  display:flex;
+
  gap:10px;
+
  justify-content:space-between;
- margin-top:50px;
+
+ margin-top:55px;
+
  padding-top:20px;
- border-top:1px solid var(--border);
+
+ border-top:
+ 1px solid var(--border);
 }
 
 .nav button{
+
  flex:1;
+
  padding:12px;
+
  border-radius:9px;
+
  border:1px solid var(--border);
- background:var(--card);
+
+ background:#0d1227;
+
  color:var(--text);
 }
 
-.nav .next{
- background:var(--accent);
- color:white;
+.nav button:hover{
+ border-color:var(--accent);
 }
 
+.nav .next{
+
+ background:
+ linear-gradient(
+  135deg,
+  var(--accent),
+  var(--accent2)
+ );
+
+ color:white;
+
+ border:0;
+}
+
+
+/* =========================
+   EDITOR
+========================= */
+
 .editor{
+
  max-width:850px;
+
  margin:auto;
 }
 
 .form-group{
+
  margin-bottom:18px;
 }
 
 .form-group label{
+
  display:block;
+
  margin-bottom:8px;
+
  font-weight:bold;
+
+ color:#d9d7ea;
 }
 
 .form-group input,
 .form-group textarea{
+
  width:100%;
+
  border:1px solid var(--border);
+
  border-radius:10px;
- background:var(--bg);
+
+ background:#090e20;
+
  color:var(--text);
+
  padding:13px;
+
  outline:none;
+
+ transition:.15s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus{
+
  border-color:var(--accent);
+
+ box-shadow:
+ 0 0 0 2px rgba(118,87,217,.12);
 }
 
 .form-group textarea{
+
  min-height:420px;
+
  resize:vertical;
+
  line-height:1.8;
 }
 
 .editor-actions{
+
  display:flex;
+
  gap:10px;
+
  margin-top:15px;
 }
 
 .editor-actions button{
+
  flex:1;
 }
 
-.toast{
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+
  position:fixed;
- bottom:20px;
- left:50%;
- transform:translateX(-50%);
- background:var(--text);
- color:var(--bg);
- padding:10px 15px;
+
+ inset:0;
+
+ background:
+ rgba(2,4,12,.78);
+
+ backdrop-filter:blur(5px);
+
+ display:flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ padding:20px;
+
+ z-index:50;
+}
+
+.modal-box{
+
+ width:min(500px,100%);
+
+ background:
+ linear-gradient(
+  145deg,
+  #171d3b,
+  #0c1127
+ );
+
+ border:1px solid var(--border);
+
+ border-radius:17px;
+
+ padding:22px;
+
+ box-shadow:
+ 0 25px 70px rgba(0,0,0,.55);
+}
+
+.modal-box input{
+
+ width:100%;
+
+ padding:13px;
+
+ border:1px solid var(--border);
+
+ border-radius:10px;
+
+ background:#090e20;
+
+ color:var(--text);
+
+ margin:12px 0;
+
+ outline:none;
+}
+
+.modal-box input:focus{
+
+ border-color:var(--accent);
+}
+
+.modal-actions{
+
+ display:flex;
+
+ gap:10px;
+}
+
+.modal-actions button{
+
+ flex:1;
+
+ padding:11px;
+
  border-radius:9px;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+
+ position:fixed;
+
+ bottom:20px;
+
+ left:50%;
+
+ transform:
+ translateX(-50%);
+
+ background:#e9e6f4;
+
+ color:#101225;
+
+ padding:10px 15px;
+
+ border-radius:9px;
+
  opacity:0;
+
  pointer-events:none;
+
  transition:.2s;
+
  z-index:100;
+
+ box-shadow:
+ 0 8px 30px rgba(0,0,0,.35);
 }
 
 .toast.show{
  opacity:1;
 }
 
-.modal{
- position:fixed;
- inset:0;
- background:#00000066;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- z-index:50;
-}
 
-.modal-box{
- width:min(500px,100%);
- background:var(--card);
- border:1px solid var(--border);
- border-radius:16px;
- padding:22px;
-}
-
-.modal-box input{
- width:100%;
- padding:13px;
- border:1px solid var(--border);
- border-radius:10px;
- background:var(--bg);
- color:var(--text);
- margin:12px 0;
-}
-
-.modal-actions{
- display:flex;
- gap:10px;
-}
-
-.modal-actions button{
- flex:1;
- padding:11px;
- border-radius:9px;
-}
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
  .hero,
  .novel-head{
+
   flex-direction:column;
+
   align-items:stretch;
  }
 
@@ -424,128 +857,267 @@ h2{
  }
 
  .reader{
-  padding:20px 15px;
+
+  padding:
+  20px 15px;
  }
 
  .nav{
+
   flex-direction:column;
  }
 
  .top{
-  padding:0 8px;
+
+  padding:
+  0 8px;
  }
 
  .brand{
+
   font-size:15px;
  }
 
  .editor-actions{
+
   flex-direction:column;
  }
 
  .chapter{
+
   align-items:flex-start;
  }
 
  .chapter-actions{
+
   flex-direction:column;
  }
+
 }
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+ width:9px;
+}
+
+::-webkit-scrollbar-track{
+ background:#070a15;
+}
+
+::-webkit-scrollbar-thumb{
+
+ background:#2d3560;
+
+ border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+ background:#4b568b;
+}
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="top">
 
-<button class="brand" onclick="library()">
+<button
+ class="brand"
+ onclick="library()"
+>
 📚 Novel Reader
 </button>
 
 <div class="tools">
-<button class="btn" onclick="font(-2)">A−</button>
-<button class="btn" onclick="font(0)">A</button>
-<button class="btn" onclick="font(2)">A+</button>
-<button class="btn" onclick="theme()">☾</button>
+
+<button
+ class="btn"
+ onclick="font(-2)"
+>
+A−
+</button>
+
+<button
+ class="btn"
+ onclick="font(0)"
+>
+A
+</button>
+
+<button
+ class="btn"
+ onclick="font(2)"
+>
+A+
+</button>
+
+<button
+ class="btn"
+ onclick="theme()"
+>
+☾
+</button>
+
 </div>
 
 </header>
 
+
 <main>
 
-<!-- LIBRARY -->
+
+<!-- =========================
+     LIBRARY
+========================= -->
 
 <section id="library">
 
 <div class="hero">
 
 <div>
+
 <h1>My Library</h1>
+
 <p class="muted">
 Create your library and add chapters manually.
 </p>
+
 </div>
 
-<button class="primary" onclick="openNovelModal()">
+
+<button
+ class="primary"
+ onclick="openNovelModal()"
+>
 + Add Novel
 </button>
 
 </div>
 
-<div id="empty" class="empty">
-<h2>📖 Your library is empty</h2>
-<p>Create your first novel to get started.</p>
+
+<div
+ id="empty"
+ class="empty"
+>
+
+<h2>
+📖 Your library is empty
+</h2>
+
+<p>
+Create your first novel to get started.
+</p>
+
 </div>
 
-<div id="grid" class="grid"></div>
+
+<div
+ id="grid"
+ class="grid"
+></div>
 
 </section>
 
 
-<!-- CHAPTER LIST -->
 
-<section id="chapters" class="hidden">
+<!-- =========================
+     CHAPTER LIST
+========================= -->
 
-<button class="btn back" onclick="library()">
+<section
+ id="chapters"
+ class="hidden"
+>
+
+<button
+ class="btn back"
+ onclick="library()"
+>
 ← Library
 </button>
+
 
 <div class="novel-head">
 
 <div>
-<p class="muted">Novel</p>
+
+<p class="muted">
+Novel
+</p>
+
 <h1 id="novelTitle"></h1>
-<p id="novelInfo" class="muted"></p>
+
+<p
+ id="novelInfo"
+ class="muted"
+></p>
+
 </div>
 
-<button class="btn danger" onclick="deleteNovel()">
+
+<button
+ class="btn danger"
+ onclick="deleteNovel()"
+>
 Delete Novel
 </button>
 
 </div>
 
-<button class="primary" onclick="openChapterEditor()">
+
+<button
+ class="primary"
+ onclick="openChapterEditor()"
+>
 + Add Chapter
 </button>
 
+
 <div style="height:20px"></div>
 
-<div id="chapterList"></div>
+
+<div
+ id="chapterList"
+></div>
 
 </section>
 
 
-<!-- CHAPTER EDITOR -->
 
-<section id="editorSection" class="hidden">
+<!-- =========================
+     CHAPTER EDITOR
+========================= -->
 
-<button class="btn back" onclick="showChapters()">
+<section
+ id="editorSection"
+ class="hidden"
+>
+
+<button
+ class="btn back"
+ onclick="showChapters()"
+>
 ← Back to Chapters
 </button>
 
+
 <div class="editor">
 
-<h1 id="editorHeading">Add Chapter</h1>
+<h1 id="editorHeading">
+Add Chapter
+</h1>
+
 
 <div class="form-group">
 
@@ -561,6 +1133,7 @@ Chapter Title
 
 </div>
 
+
 <div class="form-group">
 
 <label for="chapterTextInput">
@@ -574,13 +1147,21 @@ Chapter Text
 
 </div>
 
+
 <div class="editor-actions">
 
-<button class="secondary" onclick="showChapters()">
+<button
+ class="secondary"
+ onclick="showChapters()"
+>
 Cancel
 </button>
 
-<button class="primary" onclick="saveChapter()">
+
+<button
+ class="primary"
+ onclick="saveChapter()"
+>
 Save Chapter
 </button>
 
@@ -591,42 +1172,96 @@ Save Chapter
 </section>
 
 
-<!-- READER -->
 
-<section id="readerSection" class="hidden">
+<!-- =========================
+     READER
+========================= -->
 
-<button class="btn back" onclick="showChapters()">
+<section
+ id="readerSection"
+ class="hidden"
+>
+
+<button
+ class="btn back"
+ onclick="showChapters()"
+>
 ← Chapters
 </button>
 
+
 <article class="reader">
+
 
 <div class="reader-tools">
 
-<button class="btn" onclick="font(-2)">A−</button>
-<button class="btn" onclick="font(0)">A</button>
-<button class="btn" onclick="font(2)">A+</button>
-<button class="btn" onclick="theme()">☾</button>
+<button
+ class="btn"
+ onclick="font(-2)"
+>
+A−
+</button>
+
+<button
+ class="btn"
+ onclick="font(0)"
+>
+A
+</button>
+
+<button
+ class="btn"
+ onclick="font(2)"
+>
+A+
+</button>
+
+<button
+ class="btn"
+ onclick="theme()"
+>
+☾
+</button>
 
 </div>
+
 
 <div class="heading">
 
-<div id="chapterLabel" class="label"></div>
+<div
+ id="chapterLabel"
+ class="label"
+></div>
 
-<h1 id="chapterTitle"></h1>
+
+<h1
+ id="chapterTitle"
+></h1>
 
 </div>
 
-<div id="content" class="content"></div>
+
+<div
+ id="content"
+ class="content"
+></div>
+
 
 <div class="nav">
 
-<button id="prev" onclick="moveChapter(-1)">
+<button
+ id="prev"
+ onclick="moveChapter(-1)"
+>
 Previous Chapter
 </button>
 
-<button id="next" class="next" onclick="moveChapter(1)">
+
+<button
+ id="next"
+ class="next"
+ onclick="moveChapter(1)"
+>
 Next Chapter
 </button>
 
@@ -636,26 +1271,37 @@ Next Chapter
 
 </section>
 
+
 </main>
 
 
-<!-- NOVEL MODAL -->
 
-<div id="novelModal" class="modal hidden">
+<!-- =========================
+     NOVEL MODAL
+========================= -->
+
+<div
+ id="novelModal"
+ class="modal hidden"
+>
 
 <div class="modal-box">
 
-<h2>Create New Novel</h2>
+<h2>
+Create New Novel
+</h2>
 
 <p class="muted">
 Enter the name of your novel.
 </p>
+
 
 <input
  id="novelNameInput"
  type="text"
  placeholder="Novel title"
 />
+
 
 <div class="modal-actions">
 
@@ -665,6 +1311,7 @@ Enter the name of your novel.
 >
 Cancel
 </button>
+
 
 <button
  class="primary"
@@ -680,10 +1327,19 @@ Create Novel
 </div>
 
 
-<div id="toast" class="toast"></div>
+
+<div
+ id="toast"
+ class="toast"
+></div>
+
 
 
 <script>
+
+/* =========================
+   DATABASE
+========================= */
 
 const DB="NovelReaderDB";
 const STORE="novels";
@@ -693,11 +1349,14 @@ let current=null;
 let chapterIndex=0;
 let editingChapterIndex=null;
 
-let fontSize=Number(localStorage.getItem("fontSize")||20);
-let dark=localStorage.getItem("dark")==="1";
+let fontSize=
+ Number(
+  localStorage.getItem("fontSize")||20
+ );
 
+let dark=
+ localStorage.getItem("dark")==="1";
 
-/* DATABASE */
 
 function db(){
 
@@ -707,7 +1366,10 @@ function db(){
 
   r.onupgradeneeded=()=>{
 
-   if(!r.result.objectStoreNames.contains(STORE)){
+   if(
+    !r.result.objectStoreNames
+    .contains(STORE)
+   ){
 
     r.result.createObjectStore(
      STORE,
@@ -718,9 +1380,13 @@ function db(){
 
   };
 
-  r.onsuccess=()=>resolve(r.result);
+  r.onsuccess=()=>{
+   resolve(r.result);
+  };
 
-  r.onerror=()=>reject(r.error);
+  r.onerror=()=>{
+   reject(r.error);
+  };
 
  });
 
@@ -733,14 +1399,21 @@ async function all(){
 
  return new Promise((resolve,reject)=>{
 
-  let r=d
-   .transaction(STORE,"readonly")
+  let r=
+   d.transaction(
+    STORE,
+    "readonly"
+   )
    .objectStore(STORE)
    .getAll();
 
-  r.onsuccess=()=>resolve(r.result);
+  r.onsuccess=()=>{
+   resolve(r.result);
+  };
 
-  r.onerror=()=>reject(r.error);
+  r.onerror=()=>{
+   reject(r.error);
+  };
 
  });
 
@@ -753,13 +1426,19 @@ async function save(n){
 
  return new Promise((resolve,reject)=>{
 
-  let t=d.transaction(STORE,"readwrite");
+  let t=
+   d.transaction(
+    STORE,
+    "readwrite"
+   );
 
   t.objectStore(STORE).put(n);
 
   t.oncomplete=resolve;
 
-  t.onerror=()=>reject(t.error);
+  t.onerror=()=>{
+   reject(t.error);
+  };
 
  });
 
@@ -772,13 +1451,19 @@ async function remove(id){
 
  return new Promise((resolve,reject)=>{
 
-  let t=d.transaction(STORE,"readwrite");
+  let t=
+   d.transaction(
+    STORE,
+    "readwrite"
+   );
 
   t.objectStore(STORE).delete(id);
 
   t.oncomplete=resolve;
 
-  t.onerror=()=>reject(t.error);
+  t.onerror=()=>{
+   reject(t.error);
+  };
 
  });
 
@@ -787,18 +1472,23 @@ async function remove(id){
 
 function id(){
 
- return Date.now()+"-"+Math.random()
+ return Date.now()+
+ "-" +
+ Math.random()
   .toString(16)
   .slice(2);
 
 }
 
 
-/* UI */
+/* =========================
+   UI
+========================= */
 
 function toast(t){
 
- let e=document.getElementById("toast");
+ let e=
+  document.getElementById("toast");
 
  e.textContent=t;
 
@@ -813,21 +1503,19 @@ function toast(t){
 
 function hide(){
 
- document
-  .getElementById("library")
-  .classList.add("hidden");
+ [
+  "library",
+  "chapters",
+  "editorSection",
+  "readerSection"
+ ].forEach(id=>{
 
- document
-  .getElementById("chapters")
-  .classList.add("hidden");
+  document
+   .getElementById(id)
+   .classList
+   .add("hidden");
 
- document
-  .getElementById("editorSection")
-  .classList.add("hidden");
-
- document
-  .getElementById("readerSection")
-  .classList.add("hidden");
+ });
 
 }
 
@@ -838,95 +1526,137 @@ function library(){
 
  document
   .getElementById("library")
-  .classList.remove("hidden");
+  .classList
+  .remove("hidden");
 
  renderLibrary();
 
 }
 
 
-/* LIBRARY */
+/* =========================
+   LIBRARY
+========================= */
 
 function renderLibrary(){
 
- let grid=document.getElementById("grid");
+ let grid=
+  document.getElementById("grid");
 
  grid.innerHTML="";
+
 
  document
   .getElementById("empty")
   .classList
-  .toggle("hidden",novels.length>0);
+  .toggle(
+   "hidden",
+   novels.length>0
+  );
 
 
  novels.forEach(n=>{
 
-  let c=document.createElement("div");
+  let card=
+   document.createElement("div");
 
-  c.className="card";
+  card.className="card";
 
 
-  let title=document.createElement("h2");
+  let title=
+   document.createElement("h2");
 
   title.textContent=n.title;
 
 
-  let info=document.createElement("p");
+  let info=
+   document.createElement("p");
 
   info.className="muted";
 
   info.textContent=
    n.chapters.length+
-   (n.chapters.length===1?" chapter":" chapters")+
+   (
+    n.chapters.length===1
+    ?" chapter"
+    :" chapters"
+   )+
    " • Last read: "+
-   (n.chapters.length?("Chapter "+((n.last||0)+1)):"None");
+   (
+    n.chapters.length
+    ?"Chapter "+((n.last||0)+1)
+    :"None"
+   );
 
 
-  let actions=document.createElement("div");
+  let actions=
+   document.createElement("div");
 
   actions.className="card-actions";
 
 
-  let go=document.createElement("button");
+  let go=
+   document.createElement("button");
 
   go.className="continue";
 
   go.textContent=
-   n.chapters.length?
-   "Continue Reading":
-   "Open Novel";
+   n.chapters.length
+   ?"Continue Reading"
+   :"Open Novel";
+
 
   go.onclick=()=>{
 
-   if(n.chapters.length)
-    openReader(n,n.last||0);
-   else
+   if(n.chapters.length){
+
+    openReader(
+     n,
+     n.last||0
+    );
+
+   }else{
+
     openNovel(n);
+
+   }
 
   };
 
 
-  let list=document.createElement("button");
+  let list=
+   document.createElement("button");
 
   list.className="secondary";
 
   list.textContent="Chapters";
 
-  list.onclick=()=>openNovel(n);
+  list.onclick=()=>{
+   openNovel(n);
+  };
 
 
-  actions.append(go,list);
+  actions.append(
+   go,
+   list
+  );
 
-  c.append(title,info,actions);
+  card.append(
+   title,
+   info,
+   actions
+  );
 
-  grid.append(c);
+  grid.append(card);
 
  });
 
 }
 
 
-/* NOVEL CREATION */
+/* =========================
+   CREATE NOVEL
+========================= */
 
 function openNovelModal(){
 
@@ -958,14 +1688,19 @@ function closeNovelModal(){
 
 async function createNovel(){
 
- let input=document
-  .getElementById("novelNameInput");
+ let input=
+  document
+   .getElementById("novelNameInput");
 
- let title=input.value.trim();
+ let title=
+  input.value.trim();
+
 
  if(!title){
 
-  toast("Please enter a novel title.");
+  toast(
+   "Please enter a novel title."
+  );
 
   return;
 
@@ -995,12 +1730,16 @@ async function createNovel(){
 
  openNovel(n);
 
- toast("Novel created.");
+ toast(
+  "Novel created."
+ );
 
 }
 
 
-/* NOVEL */
+/* =========================
+   NOVEL
+========================= */
 
 function openNovel(n){
 
@@ -1023,7 +1762,11 @@ function openNovel(n){
   .getElementById("novelInfo")
   .textContent=
    n.chapters.length+
-   (n.chapters.length===1?" chapter":" chapters");
+   (
+    n.chapters.length===1
+    ?" chapter"
+    :" chapters"
+   );
 
 
  renderChapters();
@@ -1033,15 +1776,17 @@ function openNovel(n){
 
 function renderChapters(){
 
- let list=document
-  .getElementById("chapterList");
+ let list=
+  document
+   .getElementById("chapterList");
 
  list.innerHTML="";
 
 
  if(!current.chapters.length){
 
-  let empty=document.createElement("div");
+  let empty=
+   document.createElement("div");
 
   empty.className="empty";
 
@@ -1056,71 +1801,104 @@ function renderChapters(){
  }
 
 
- current.chapters.forEach((c,i)=>{
+ current.chapters.forEach(
+  (c,i)=>{
 
-  let row=document.createElement("div");
+   let row=
+    document.createElement("div");
 
-  row.className="chapter";
-
-
-  let num=document.createElement("span");
-
-  num.className="num";
-
-  num.textContent="#"+(i+1);
+   row.className="chapter";
 
 
-  let name=document.createElement("span");
+   let num=
+    document.createElement("span");
 
-  name.className="name";
+   num.className="num";
 
-  name.textContent=c.title;
-
-
-  let actions=document.createElement("div");
-
-  actions.className="chapter-actions";
+   num.textContent=
+    "#"+(i+1);
 
 
-  let read=document.createElement("button");
+   let name=
+    document.createElement("span");
 
-  read.className="small-btn";
+   name.className="name";
 
-  read.textContent="Read";
-
-  read.onclick=()=>openReader(current,i);
-
-
-  let edit=document.createElement("button");
-
-  edit.className="small-btn";
-
-  edit.textContent="Edit";
-
-  edit.onclick=()=>editChapter(i);
+   name.textContent=
+    c.title;
 
 
-  let del=document.createElement("button");
+   let actions=
+    document.createElement("div");
 
-  del.className="small-btn";
-
-  del.textContent="Delete";
-
-  del.onclick=()=>deleteChapter(i);
+   actions.className=
+    "chapter-actions";
 
 
-  actions.append(read,edit,del);
+   let read=
+    document.createElement("button");
 
-  row.append(num,name,actions);
+   read.className="small-btn";
 
-  list.append(row);
+   read.textContent="Read";
 
- });
+   read.onclick=()=>{
+    openReader(
+     current,
+     i
+    );
+   };
+
+
+   let edit=
+    document.createElement("button");
+
+   edit.className="small-btn";
+
+   edit.textContent="Edit";
+
+   edit.onclick=()=>{
+    editChapter(i);
+   };
+
+
+   let del=
+    document.createElement("button");
+
+   del.className="small-btn";
+
+   del.textContent="Delete";
+
+   del.onclick=()=>{
+    deleteChapter(i);
+   };
+
+
+   actions.append(
+    read,
+    edit,
+    del
+   );
+
+
+   row.append(
+    num,
+    name,
+    actions
+   );
+
+
+   list.append(row);
+
+  }
+ );
 
 }
 
 
-/* CHAPTER EDITOR */
+/* =========================
+   CHAPTER EDITOR
+========================= */
 
 function openChapterEditor(){
 
@@ -1130,20 +1908,25 @@ function openChapterEditor(){
   .getElementById("editorHeading")
   .textContent="Add Chapter";
 
+
  document
   .getElementById("chapterTitleInput")
   .value="";
+
 
  document
   .getElementById("chapterTextInput")
   .value="";
 
+
  hide();
+
 
  document
   .getElementById("editorSection")
   .classList
   .remove("hidden");
+
 
  document
   .getElementById("chapterTitleInput")
@@ -1154,23 +1937,29 @@ function openChapterEditor(){
 
 function editChapter(i){
 
- let c=current.chapters[i];
+ let c=
+  current.chapters[i];
 
  editingChapterIndex=i;
+
 
  document
   .getElementById("editorHeading")
   .textContent="Edit Chapter";
 
+
  document
   .getElementById("chapterTitleInput")
   .value=c.title;
+
 
  document
   .getElementById("chapterTextInput")
   .value=c.text;
 
+
  hide();
+
 
  document
   .getElementById("editorSection")
@@ -1182,20 +1971,29 @@ function editChapter(i){
 
 async function saveChapter(){
 
- let title=document
-  .getElementById("chapterTitleInput")
-  .value
-  .trim();
+ let title=
+  document
+   .getElementById(
+    "chapterTitleInput"
+   )
+   .value
+   .trim();
 
- let text=document
-  .getElementById("chapterTextInput")
-  .value
-  .trim();
+
+ let text=
+  document
+   .getElementById(
+    "chapterTextInput"
+   )
+   .value
+   .trim();
 
 
  if(!title){
 
-  toast("Please enter a chapter title.");
+  toast(
+   "Please enter a chapter title."
+  );
 
   return;
 
@@ -1204,7 +2002,9 @@ async function saveChapter(){
 
  if(!text){
 
-  toast("Please enter the chapter text.");
+  toast(
+   "Please enter the chapter text."
+  );
 
   return;
 
@@ -1220,19 +2020,30 @@ async function saveChapter(){
  };
 
 
- if(editingChapterIndex===null){
+ if(
+  editingChapterIndex===null
+ ){
 
-  current.chapters.push(chapter);
+  current.chapters.push(
+   chapter
+  );
 
-  current.last=current.chapters.length-1;
+  current.last=
+   current.chapters.length-1;
 
-  toast("Chapter saved.");
+  toast(
+   "Chapter saved."
+  );
 
  }else{
 
-  current.chapters[editingChapterIndex]=chapter;
+  current.chapters[
+   editingChapterIndex
+  ]=chapter;
 
-  toast("Chapter updated.");
+  toast(
+   "Chapter updated."
+  );
 
  }
 
@@ -1246,38 +2057,62 @@ async function saveChapter(){
 
 async function deleteChapter(i){
 
- if(!confirm("Delete this chapter?"))return;
+ if(
+  !confirm(
+   "Delete this chapter?"
+  )
+ )return;
 
- current.chapters.splice(i,1);
 
- if(current.last>=current.chapters.length){
+ current.chapters.splice(
+  i,
+  1
+ );
+
+
+ if(
+  current.last>=
+  current.chapters.length
+ ){
 
   current.last=
-   Math.max(0,current.chapters.length-1);
+   Math.max(
+    0,
+    current.chapters.length-1
+   );
 
  }
+
 
  await save(current);
 
  renderChapters();
 
- toast("Chapter deleted.");
+ toast(
+  "Chapter deleted."
+ );
 
 }
 
 
-/* READER */
+/* =========================
+   READER
+========================= */
 
 function showChapters(){
 
- if(current)
+ if(current){
   openNovel(current);
+ }
+
 }
 
 
 async function openReader(n,i){
 
- if(!n.chapters.length)return;
+ if(!n.chapters.length)
+  return;
+
 
  current=n;
 
@@ -1289,42 +2124,53 @@ async function openReader(n,i){
 
  hide();
 
+
  document
   .getElementById("readerSection")
   .classList
   .remove("hidden");
 
 
- let c=n.chapters[i];
+ let c=
+  n.chapters[i];
 
 
  document
-  .getElementById("chapterLabel")
+  .getElementById(
+   "chapterLabel"
+  )
   .textContent=
    "CHAPTER "+(i+1);
 
 
  document
-  .getElementById("chapterTitle")
-  .textContent=c.title;
+  .getElementById(
+   "chapterTitle"
+  )
+  .textContent=
+   c.title;
 
 
- let content=document
-  .getElementById("content");
+ let content=
+  document.getElementById(
+   "content"
+  );
 
  content.innerHTML="";
 
 
- let paragraphs=c.text
-  .replace(/\r\n?/g,"\n")
-  .split(/\n\s*\n/)
-  .map(x=>x.trim())
-  .filter(Boolean);
+ let paragraphs=
+  c.text
+   .replace(/\r\n?/g,"\n")
+   .split(/\n\s*\n/)
+   .map(x=>x.trim())
+   .filter(Boolean);
 
 
  paragraphs.forEach(p=>{
 
-  let el=document.createElement("p");
+  let el=
+   document.createElement("p");
 
   el.textContent=p;
 
@@ -1344,64 +2190,106 @@ async function openReader(n,i){
    i>=n.chapters.length-1;
 
 
- window.scrollTo(0,0);
+ window.scrollTo(
+  0,
+  0
+ );
 
 }
 
 
 function moveChapter(d){
 
- let x=chapterIndex+d;
+ let x=
+  chapterIndex+d;
+
 
  if(
   !current ||
   x<0 ||
   x>=current.chapters.length
- )return;
+ ){
+  return;
+ }
 
- openReader(current,x);
+
+ openReader(
+  current,
+  x
+ );
 
 }
 
 
-/* DELETE NOVEL */
+/* =========================
+   DELETE NOVEL
+========================= */
 
 async function deleteNovel(){
 
- if(!current)return;
-
- if(!confirm("Delete this novel and all its chapters?"))
+ if(!current)
   return;
 
- await remove(current.id);
 
- novels=novels.filter(
-  x=>x.id!==current.id
+ if(
+  !confirm(
+   "Delete this novel and all its chapters?"
+  )
+ ){
+  return;
+ }
+
+
+ await remove(
+  current.id
  );
+
+
+ novels=
+  novels.filter(
+   x=>x.id!==current.id
+  );
+
 
  current=null;
 
+
  library();
 
- toast("Novel deleted.");
+
+ toast(
+  "Novel deleted."
+ );
 
 }
 
 
-/* SETTINGS */
+/* =========================
+   FONT
+========================= */
 
 function font(d){
 
- if(d===0)
+ if(d===0){
+
   fontSize=20;
- else
+
+ }else{
+
   fontSize+=d;
+
+ }
+
 
  fontSize=
   Math.max(
    16,
-   Math.min(28,fontSize)
+   Math.min(
+    28,
+    fontSize
+   )
   );
+
 
  document
   .documentElement
@@ -1411,6 +2299,7 @@ function font(d){
    fontSize+"px"
   );
 
+
  localStorage.setItem(
   "fontSize",
   fontSize
@@ -1419,6 +2308,10 @@ function font(d){
 }
 
 
+/* =========================
+   THEME
+========================= */
+
 function theme(){
 
  dark=!dark;
@@ -1426,7 +2319,11 @@ function theme(){
  document
   .body
   .classList
-  .toggle("dark",dark);
+  .toggle(
+   "dark",
+   dark
+  );
+
 
  localStorage.setItem(
   "dark",
@@ -1436,12 +2333,18 @@ function theme(){
 }
 
 
-/* INITIALIZATION */
+/* =========================
+   START
+========================= */
 
 document
  .body
  .classList
- .toggle("dark",dark);
+ .toggle(
+  "dark",
+  dark
+ );
+
 
 font(0);
 
