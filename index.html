@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>قارئ الروايات</title>
+
+<style>
+:root{
+ --bg:#f4f1ea;--card:#fffdf8;--text:#292722;--muted:#716c62;
+ --border:#d8d1c5;--accent:#6f4e37;--danger:#a33b32;
+ --size:20px;
+}
+body.dark{
+ --bg:#171717;--card:#202020;--text:#e8e4dc;
+ --muted:#aaa59c;--border:#3a3936;--accent:#c4a27b;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Georgia,"Times New Roman",serif;
+ transition:.2s
+}
+button{font:inherit;cursor:pointer}
+.top{
+ position:sticky;top:0;z-index:10;height:62px;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 14px;background:var(--card);
+ border-bottom:1px solid var(--border)
+}
+.brand{border:0;background:none;color:var(--text);font-weight:bold;font-size:18px}
+.tools{display:flex;gap:5px}
+.btn{
+ border:1px solid var(--border);background:var(--card);color:var(--text);
+ border-radius:9px;min-width:40px;height:40px
+}
+main{width:min(1000px,calc(100% - 20px));margin:auto;padding:22px 0 60px}
+.hidden{display:none!important}
+.hero,.reader,.novel-head{
+ background:var(--card);border:1px solid var(--border);
+ border-radius:16px;padding:22px;box-shadow:0 8px 25px #00000010
+}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:15px}
+h1,h2{margin-top:0}
+.muted{color:var(--muted)}
+.add{
+ background:var(--accent);color:white;border:0;border-radius:10px;
+ padding:13px 18px;white-space:nowrap
+}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+ gap:15px;margin-top:20px
+}
+.card{
+ background:var(--card);border:1px solid var(--border);
+ border-radius:14px;padding:18px
+}
+.card h2{font-size:21px}
+.card-actions{display:flex;gap:8px;margin-top:18px}
+.card-actions button{flex:1;padding:10px;border-radius:9px}
+.continue{background:var(--accent);color:white;border:0}
+.secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.empty{text-align:center;padding:60px 15px;color:var(--muted)}
+.back{margin-bottom:15px}
+.chapter{
+ width:100%;display:flex;gap:12px;align-items:center;
+ text-align:right;background:var(--card);color:var(--text);
+ border:1px solid var(--border);border-radius:10px;
+ padding:14px;margin-bottom:8px
+}
+.num{color:var(--accent);font-weight:bold;min-width:50px}
+.name{flex:1}
+.reader{max-width:850px;margin:auto;padding:clamp(20px,5vw,55px)}
+.reader-tools{display:flex;gap:5px;margin-bottom:45px;direction:ltr}
+.heading{direction:ltr;text-align:left;margin-bottom:35px}
+.heading .label{color:var(--accent);font:bold 13px Arial}
+.heading h1{font-size:clamp(30px,6vw,46px);margin:8px 0}
+.subtitle{color:var(--muted);font-size:21px}
+.content{
+ direction:ltr;text-align:left;font-size:var(--size);
+ line-height:1.95;user-select:text;-webkit-user-select:text
+}
+.content p{margin:0 0 1.35em}
+.nav{
+ display:flex;gap:10px;justify-content:space-between;
+ margin-top:50px;padding-top:20px;border-top:1px solid var(--border);
+ direction:ltr
+}
+.nav button{
+ flex:1;padding:12px;border-radius:9px;
+ border:1px solid var(--border);background:var(--card);color:var(--text)
+}
+.nav .next{background:var(--accent);color:white}
+.danger{color:var(--danger);border-color:var(--danger);padding:9px 12px}
+.novel-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:20px}
+.toast{
+ position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:var(--text);color:var(--bg);padding:10px 15px;
+ border-radius:9px;opacity:0;pointer-events:none;transition:.2s
+}
+.toast.show{opacity:1}
+@media(max-width:600px){
+ .hero,.novel-head{flex-direction:column;align-items:stretch}
+ .add{width:100%}
+ .reader{padding:20px 15px}
+ .nav{flex-direction:column}
+ .top{padding:0 8px}
+ .brand{font-size:15px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<button class="brand" onclick="library()">📚 قارئ الروايات</button>
+<div class="tools">
+<button class="btn" onclick="font(-2)">A−</button>
+<button class="btn" onclick="font(0)">A</button>
+<button class="btn" onclick="font(2)">A+</button>
+<button class="btn" onclick="theme()">☾</button>
+</div>
+</header>
+
+<main>
+
+<section id="library">
+<div class="hero">
+<div>
+<h1>مكتبتك</h1>
+<p class="muted">أضف ملفات TXT الخاصة برواياتك وسيتم تقسيمها إلى فصول تلقائيًا.</p>
+</div>
+
+<label class="add">
++ إضافة رواية
+<input id="files" type="file" accept=".txt,text/plain" multiple hidden>
+</label>
+</div>
+
+<div id="empty" class="empty">
+<h2>📖 المكتبة فارغة</h2>
+<p>اختر ملف TXT لإضافة أول رواية.</p>
+</div>
+
+<div id="grid" class="grid"></div>
+</section>
+
+
+<section id="chapters" class="hidden">
+
+<button class="btn back" onclick="library()">→ المكتبة</button>
+
+<div class="novel-head">
+<div>
+<p class="muted">الرواية</p>
+<h1 id="novelTitle"></h1>
+<p id="novelInfo" class="muted"></p>
+</div>
+
+<button class="btn danger" onclick="deleteNovel()">حذف الرواية</button>
+</div>
+
+<div id="chapterList"></div>
+</section>
+
+
+<section id="readerSection" class="hidden">
+
+<button class="btn back" onclick="showChapters()">→ الفصول</button>
+
+<article class="reader">
+
+<div class="reader-tools">
+<button class="btn" onclick="font(-2)">A−</button>
+<button class="btn" onclick="font(0)">A</button>
+<button class="btn" onclick="font(2)">A+</button>
+<button class="btn" onclick="theme()">☾</button>
+</div>
+
+<div class="heading">
+<div id="chapterLabel" class="label"></div>
+<h1 id="chapterTitle"></h1>
+<div id="chapterSubtitle" class="subtitle"></div>
+</div>
+
+<div id="content" class="content"></div>
+
+<div class="nav">
+<button id="prev" onclick="moveChapter(-1)">الفصل السابق</button>
+<button id="next" class="next" onclick="moveChapter(1)">الفصل التالي</button>
+</div>
+
+</article>
+</section>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+const DB="NovelReaderDB";
+const STORE="novels";
+
+let novels=[];
+let current=null;
+let chapterIndex=0;
+
+let fontSize=Number(localStorage.getItem("fontSize")||20);
+let dark=localStorage.getItem("dark")==="1";
+
+function db(){
+ return new Promise((resolve,reject)=>{
+  let r=indexedDB.open(DB,1);
+
+  r.onupgradeneeded=()=>{
+   if(!r.result.objectStoreNames.contains(STORE))
+    r.result.createObjectStore(STORE,{keyPath:"id"});
+  };
+
+  r.onsuccess=()=>resolve(r.result);
+  r.onerror=()=>reject(r.error);
+ });
+}
+
+async function all(){
+ let d=await db();
+ return new Promise((resolve,reject)=>{
+  let r=d.transaction(STORE,"readonly").objectStore(STORE).getAll();
+  r.onsuccess=()=>resolve(r.result);
+  r.onerror=()=>reject(r.error);
+ });
+}
+
+async function save(n){
+ let d=await db();
+ return new Promise((resolve,reject)=>{
+  let t=d.transaction(STORE,"readwrite");
+  t.objectStore(STORE).put(n);
+  t.oncomplete=resolve;
+  t.onerror=()=>reject(t.error);
+ });
+}
+
+async function remove(id){
+ let d=await db();
+ return new Promise((resolve,reject)=>{
+  let t=d.transaction(STORE,"readwrite");
+  t.objectStore(STORE).delete(id);
+  t.oncomplete=resolve;
+  t.onerror=()=>reject(t.error);
+ });
+}
+
+function id(){
+ return Date.now()+"-"+Math.random().toString(16).slice(2);
+}
+
+function normalize(t){
+ return t.replace(/^\uFEFF/,"")
+ .replace(/\r\n?/g,"\n")
+ .replace(/\u00a0/g," ")
+ .trim();
+}
+
+function isChapter(s){
+ return /^chapter\s+(?:[0-9]+|[ivxlcdm]+|[a-z]+)(?:\s*[:\-–—.]\s*.*)?$/i.test(s.trim());
+}
+
+function parse(text){
+
+ text=normalize(text);
+ let lines=text.split("\n");
+ let starts=[];
+
+ for(let i=0;i<lines.length;i++)
+  if(isChapter(lines[i])) starts.push(i);
+
+ if(!starts.length){
+  return [{
+   label:"1",title:"",subtitle:"",
+   paragraphs:text.split(/\n\s*\n/).filter(Boolean)
+  }];
+ }
+
+ let result=[];
+
+ for(let x=0;x<starts.length;x++){
+
+  let start=starts[x];
+  let end=x+1<starts.length?starts[x+1]:lines.length;
+
+  let heading=lines[start].trim();
+  let rest=heading.replace(/^chapter\s+/i,"").trim();
+
+  let title="";
+  let m=rest.match(/^(.+?)\s*[:\-–—.]\s+(.+)$/);
+
+  if(m){
+   rest=m[1];
+   title=m[2];
+  }
+
+  let body=lines.slice(start+1,end);
+
+  while(body.length&&!body[0].trim()) body.shift();
+
+  let subtitle="";
+
+  if(body.length&&body[0].trim()&&body[0].trim().length<=90
+     &&body.length>1&&!/[.!?]$/.test(body[0].trim())){
+   subtitle=body.shift().trim();
+
+   while(body.length&&!body[0].trim()) body.shift();
+  }
+
+  let paragraphs=body.join("\n")
+   .trim()
+   .split(/\n\s*\n/)
+   .map(x=>x.trim())
+   .filter(Boolean);
+
+  result.push({label:rest,title,subtitle,paragraphs});
+ }
+
+ return result;
+}
+
+function titleOf(name){
+ return name.replace(/\.[^/.]+$/,"").replace(/_/g," ").trim();
+}
+
+function toast(t){
+ let e=document.getElementById("toast");
+ e.textContent=t;
+ e.classList.add("show");
+ setTimeout(()=>e.classList.remove("show"),2200);
+}
+
+function hide(){
+ document.getElementById("library").classList.add("hidden");
+ document.getElementById("chapters").classList.add("hidden");
+ document.getElementById("readerSection").classList.add("hidden");
+}
+
+function library(){
+
+ hide();
+ document.getElementById("library").classList.remove("hidden");
+
+ let grid=document.getElementById("grid");
+ grid.innerHTML="";
+
+ document.getElementById("empty").classList.toggle("hidden",novels.length>0);
+
+ novels.forEach(n=>{
+
+  let c=document.createElement("div");
+  c.className="card";
+
+  c.innerHTML=
+   "<h2>"+escape(n.title)+"</h2>"+
+   "<p class='muted'>"+n.chapters.length+
+   " فصلًا — آخر قراءة: الفصل "+
+   ((n.last||0)+1)+"</p>";
+
+  let a=document.createElement("div");
+  a.className="card-actions";
+
+  let go=document.createElement("button");
+  go.className="continue";
+  go.textContent="متابعة القراءة";
+  go.onclick=()=>openReader(n,n.last||0);
+
+  let list=document.createElement("button");
+  list.className="secondary";
+  list.textContent="الفصول";
+  list.onclick=()=>openNovel(n);
+
+  a.append(go,list);
+  c.append(a);
+  grid.append(c);
+ });
+}
+
+function escape(s){
+ let d=document.createElement("div");
+ d.textContent=s;
+ return d.innerHTML;
+}
+
+function openNovel(n){
+
+ current=n;
+
+ hide();
+ document.getElementById("chapters").classList.remove("hidden");
+
+ document.getElementById("novelTitle").textContent=n.title;
+ document.getElementById("novelInfo").textContent=n.chapters.length+" فصلًا";
+
+ let list=document.getElementById("chapterList");
+ list.innerHTML="";
+
+ n.chapters.forEach((c,i)=>{
+
+  let b=document.createElement("button");
+  b.className="chapter";
+
+  let num=document.createElement("span");
+  num.className="num";
+  num.textContent="#"+(i+1);
+
+  let name=document.createElement("span");
+  name.className="name";
+  name.textContent=c.title?
+   "Chapter "+c.label+" — "+c.title:
+   "Chapter "+c.label;
+
+  b.append(num,name);
+
+  if(i===n.last){
+   let mark=document.createElement("small");
+   mark.textContent="آخر قراءة";
+   mark.className="muted";
+   b.append(mark);
+  }
+
+  b.onclick=()=>openReader(n,i);
+  list.append(b);
+ });
+}
+
+function showChapters(){
+ if(current) openNovel(current);
+}
+
+async function openReader(n,i){
+
+ current=n;
+ chapterIndex=i;
+
+ n.last=i;
+ await save(n);
+
+ hide();
+ document.getElementById("readerSection").classList.remove("hidden");
+
+ let c=n.chapters[i];
+
+ document.getElementById("chapterLabel").textContent=
+  "CHAPTER "+c.label;
+
+ let title=document.getElementById("chapterTitle");
+ title.textContent=c.title;
+ title.classList.toggle("hidden",!c.title);
+
+ let sub=document.getElementById("chapterSubtitle");
+ sub.textContent=c.subtitle;
+ sub.classList.toggle("hidden",!c.subtitle);
+
+ let content=document.getElementById("content");
+ content.innerHTML="";
+
+ c.paragraphs.forEach(p=>{
+  let el=document.createElement("p");
+  el.textContent=p;
+  content.append(el);
+ });
+
+ document.getElementById("prev").disabled=i<=0;
+ document.getElementById("next").disabled=i>=n.chapters.length-1;
+
+ window.scrollTo(0,0);
+}
+
+function moveChapter(d){
+
+ let x=chapterIndex+d;
+
+ if(!current||x<0||x>=current.chapters.length)return;
+
+ openReader(current,x);
+}
+
+function font(d){
+
+ if(d===0) fontSize=20;
+ else fontSize+=d;
+
+ fontSize=Math.max(16,Math.min(28,fontSize));
+
+ document.documentElement.style.setProperty("--size",fontSize+"px");
+ localStorage.setItem("fontSize",fontSize);
+}
+
+function theme(){
+
+ dark=!dark;
+
+ document.body.classList.toggle("dark",dark);
+ localStorage.setItem("dark",dark?"1":"0");
+}
+
+async function deleteNovel(){
+
+ if(!current)return;
+
+ if(!confirm("هل تريد حذف هذه الرواية من الجهاز؟"))return;
+
+ await remove(current.id);
+
+ novels=novels.filter(x=>x.id!==current.id);
+ current=null;
+
+ library();
+ toast("تم حذف الرواية");
+}
+
+document.getElementById("files").addEventListener("change",async e=>{
+
+ let files=[...e.target.files];
+
+ for(let file of files){
+
+  try{
+
+   let text=await file.text();
+   let chapters=parse(text);
+
+   let old=novels.find(x=>x.source===file.name);
+
+   let n=old||{
+    id:id(),
+    title:titleOf(file.name),
+    source:file.name,
+    last:0,
+    added:Date.now()
+   };
+
+   n.chapters=chapters;
+
+   await save(n);
+
+   if(!old)novels.push(n);
+
+   toast("تمت إضافة "+n.title);
+
+  }catch(err){
+   console.error(err);
+   toast("حدث خطأ أثناء قراءة الملف");
+  }
+ }
+
+ e.target.value="";
+ library();
+});
+
+document.body.classList.toggle("dark",dark);
+font(0);
+
+(async()=>{
+ try{
+  novels=await all();
+ }catch(e){
+  console.error(e);
+ }
+ library();
+})();
+
+</script>
+
+</body>
+</html>
