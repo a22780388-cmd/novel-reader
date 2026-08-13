@@ -265,7 +265,7 @@ function normalize(t){
 }
 
 function isChapter(s){
- return /^chapter\s+(?:[0-9]+|[ivxlcdm]+|[a-z]+)(?:\s*[:\-–—.]\s*.*)?$/i.test(s.trim());
+ return /^chapter\s+(?:\d+|[ivxlcdm]+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)(?:\s*[:\-–—.]\s*.*)?$/i.test(s.trim());
 }
 
 function parse(text){
