@@ -1,111 +1,455 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>قارئ الروايات</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novel Reader</title>
 
 <style>
 :root{
- --bg:#f4f1ea;--card:#fffdf8;--text:#292722;--muted:#716c62;
- --border:#d8d1c5;--accent:#6f4e37;--danger:#a33b32;
+ --bg:#f4f1ea;
+ --card:#fffdf8;
+ --text:#292722;
+ --muted:#716c62;
+ --border:#d8d1c5;
+ --accent:#6f4e37;
+ --danger:#a33b32;
  --size:20px;
 }
+
 body.dark{
- --bg:#171717;--card:#202020;--text:#e8e4dc;
- --muted:#aaa59c;--border:#3a3936;--accent:#c4a27b;
+ --bg:#171717;
+ --card:#202020;
+ --text:#e8e4dc;
+ --muted:#aaa59c;
+ --border:#3a3936;
+ --accent:#c4a27b;
 }
-*{box-sizing:border-box}
+
+*{
+ box-sizing:border-box;
+}
+
 body{
- margin:0;background:var(--bg);color:var(--text);
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
  font-family:Georgia,"Times New Roman",serif;
- transition:.2s
+ transition:.2s;
 }
-button{font:inherit;cursor:pointer}
+
+button,
+input,
+textarea{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
 .top{
- position:sticky;top:0;z-index:10;height:62px;
- display:flex;align-items:center;justify-content:space-between;
- padding:0 14px;background:var(--card);
- border-bottom:1px solid var(--border)
+ position:sticky;
+ top:0;
+ z-index:10;
+ height:62px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 14px;
+ background:var(--card);
+ border-bottom:1px solid var(--border);
 }
-.brand{border:0;background:none;color:var(--text);font-weight:bold;font-size:18px}
-.tools{display:flex;gap:5px}
+
+.brand{
+ border:0;
+ background:none;
+ color:var(--text);
+ font-weight:bold;
+ font-size:18px;
+}
+
+.tools{
+ display:flex;
+ gap:5px;
+}
+
 .btn{
- border:1px solid var(--border);background:var(--card);color:var(--text);
- border-radius:9px;min-width:40px;height:40px
+ border:1px solid var(--border);
+ background:var(--card);
+ color:var(--text);
+ border-radius:9px;
+ min-width:40px;
+ height:40px;
 }
-main{width:min(1000px,calc(100% - 20px));margin:auto;padding:22px 0 60px}
-.hidden{display:none!important}
-.hero,.reader,.novel-head{
- background:var(--card);border:1px solid var(--border);
- border-radius:16px;padding:22px;box-shadow:0 8px 25px #00000010
+
+main{
+ width:min(1000px,calc(100% - 20px));
+ margin:auto;
+ padding:22px 0 60px;
 }
-.hero{display:flex;justify-content:space-between;align-items:center;gap:15px}
-h1,h2{margin-top:0}
-.muted{color:var(--muted)}
-.add{
- background:var(--accent);color:white;border:0;border-radius:10px;
- padding:13px 18px;white-space:nowrap
+
+.hidden{
+ display:none!important;
 }
+
+.hero,
+.reader,
+.novel-head,
+.editor{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:22px;
+ box-shadow:0 8px 25px #00000010;
+}
+
+.hero{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+}
+
+h1,
+h2{
+ margin-top:0;
+}
+
+.muted{
+ color:var(--muted);
+}
+
+.primary{
+ background:var(--accent);
+ color:white;
+ border:0;
+ border-radius:10px;
+ padding:13px 18px;
+ white-space:nowrap;
+}
+
+.secondary{
+ background:var(--bg);
+ color:var(--text);
+ border:1px solid var(--border);
+ border-radius:9px;
+ padding:10px 14px;
+}
+
+.danger{
+ color:var(--danger);
+ border-color:var(--danger);
+ padding:9px 12px;
+}
+
 .grid{
- display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
- gap:15px;margin-top:20px
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+ gap:15px;
+ margin-top:20px;
 }
+
 .card{
- background:var(--card);border:1px solid var(--border);
- border-radius:14px;padding:18px
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:14px;
+ padding:18px;
 }
-.card h2{font-size:21px}
-.card-actions{display:flex;gap:8px;margin-top:18px}
-.card-actions button{flex:1;padding:10px;border-radius:9px}
-.continue{background:var(--accent);color:white;border:0}
-.secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
-.empty{text-align:center;padding:60px 15px;color:var(--muted)}
-.back{margin-bottom:15px}
+
+.card h2{
+ font-size:21px;
+}
+
+.card-actions{
+ display:flex;
+ gap:8px;
+ margin-top:18px;
+}
+
+.card-actions button{
+ flex:1;
+ padding:10px;
+ border-radius:9px;
+}
+
+.continue{
+ background:var(--accent);
+ color:white;
+ border:0;
+}
+
+.empty{
+ text-align:center;
+ padding:60px 15px;
+ color:var(--muted);
+}
+
+.back{
+ margin-bottom:15px;
+}
+
+.novel-head{
+ display:flex;
+ justify-content:space-between;
+ gap:15px;
+ margin-bottom:20px;
+}
+
 .chapter{
- width:100%;display:flex;gap:12px;align-items:center;
- text-align:right;background:var(--card);color:var(--text);
- border:1px solid var(--border);border-radius:10px;
- padding:14px;margin-bottom:8px
+ width:100%;
+ display:flex;
+ gap:12px;
+ align-items:center;
+ text-align:left;
+ background:var(--card);
+ color:var(--text);
+ border:1px solid var(--border);
+ border-radius:10px;
+ padding:14px;
+ margin-bottom:8px;
 }
-.num{color:var(--accent);font-weight:bold;min-width:50px}
-.name{flex:1}
-.reader{max-width:850px;margin:auto;padding:clamp(20px,5vw,55px)}
-.reader-tools{display:flex;gap:5px;margin-bottom:45px;direction:ltr}
-.heading{direction:ltr;text-align:left;margin-bottom:35px}
-.heading .label{color:var(--accent);font:bold 13px Arial}
-.heading h1{font-size:clamp(30px,6vw,46px);margin:8px 0}
-.subtitle{color:var(--muted);font-size:21px}
+
+.chapter:hover{
+ border-color:var(--accent);
+}
+
+.num{
+ color:var(--accent);
+ font-weight:bold;
+ min-width:50px;
+}
+
+.name{
+ flex:1;
+}
+
+.chapter-actions{
+ display:flex;
+ gap:6px;
+}
+
+.small-btn{
+ border:1px solid var(--border);
+ background:var(--bg);
+ color:var(--text);
+ border-radius:7px;
+ padding:6px 9px;
+}
+
+.reader{
+ max-width:850px;
+ margin:auto;
+ padding:clamp(20px,5vw,55px);
+}
+
+.reader-tools{
+ display:flex;
+ gap:5px;
+ margin-bottom:45px;
+}
+
+.heading{
+ text-align:left;
+ margin-bottom:35px;
+}
+
+.heading .label{
+ color:var(--accent);
+ font:bold 13px Arial;
+}
+
+.heading h1{
+ font-size:clamp(30px,6vw,46px);
+ margin:8px 0;
+}
+
+.subtitle{
+ color:var(--muted);
+ font-size:21px;
+}
+
 .content{
- direction:ltr;text-align:left;font-size:var(--size);
- line-height:1.95;user-select:text;-webkit-user-select:text
+ text-align:left;
+ font-size:var(--size);
+ line-height:1.95;
+ user-select:text;
+ -webkit-user-select:text;
 }
-.content p{margin:0 0 1.35em}
+
+.content p{
+ margin:0 0 1.35em;
+ white-space:pre-wrap;
+}
+
 .nav{
- display:flex;gap:10px;justify-content:space-between;
- margin-top:50px;padding-top:20px;border-top:1px solid var(--border);
- direction:ltr
+ display:flex;
+ gap:10px;
+ justify-content:space-between;
+ margin-top:50px;
+ padding-top:20px;
+ border-top:1px solid var(--border);
 }
+
 .nav button{
- flex:1;padding:12px;border-radius:9px;
- border:1px solid var(--border);background:var(--card);color:var(--text)
+ flex:1;
+ padding:12px;
+ border-radius:9px;
+ border:1px solid var(--border);
+ background:var(--card);
+ color:var(--text);
 }
-.nav .next{background:var(--accent);color:white}
-.danger{color:var(--danger);border-color:var(--danger);padding:9px 12px}
-.novel-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:20px}
+
+.nav .next{
+ background:var(--accent);
+ color:white;
+}
+
+.editor{
+ max-width:850px;
+ margin:auto;
+}
+
+.form-group{
+ margin-bottom:18px;
+}
+
+.form-group label{
+ display:block;
+ margin-bottom:8px;
+ font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea{
+ width:100%;
+ border:1px solid var(--border);
+ border-radius:10px;
+ background:var(--bg);
+ color:var(--text);
+ padding:13px;
+ outline:none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+ border-color:var(--accent);
+}
+
+.form-group textarea{
+ min-height:420px;
+ resize:vertical;
+ line-height:1.8;
+}
+
+.editor-actions{
+ display:flex;
+ gap:10px;
+ margin-top:15px;
+}
+
+.editor-actions button{
+ flex:1;
+}
+
 .toast{
- position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
- background:var(--text);color:var(--bg);padding:10px 15px;
- border-radius:9px;opacity:0;pointer-events:none;transition:.2s
+ position:fixed;
+ bottom:20px;
+ left:50%;
+ transform:translateX(-50%);
+ background:var(--text);
+ color:var(--bg);
+ padding:10px 15px;
+ border-radius:9px;
+ opacity:0;
+ pointer-events:none;
+ transition:.2s;
+ z-index:100;
 }
-.toast.show{opacity:1}
+
+.toast.show{
+ opacity:1;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:#00000066;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ z-index:50;
+}
+
+.modal-box{
+ width:min(500px,100%);
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:22px;
+}
+
+.modal-box input{
+ width:100%;
+ padding:13px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ background:var(--bg);
+ color:var(--text);
+ margin:12px 0;
+}
+
+.modal-actions{
+ display:flex;
+ gap:10px;
+}
+
+.modal-actions button{
+ flex:1;
+ padding:11px;
+ border-radius:9px;
+}
+
 @media(max-width:600px){
- .hero,.novel-head{flex-direction:column;align-items:stretch}
- .add{width:100%}
- .reader{padding:20px 15px}
- .nav{flex-direction:column}
- .top{padding:0 8px}
- .brand{font-size:15px}
+
+ .hero,
+ .novel-head{
+  flex-direction:column;
+  align-items:stretch;
+ }
+
+ .primary{
+  width:100%;
+ }
+
+ .reader{
+  padding:20px 15px;
+ }
+
+ .nav{
+  flex-direction:column;
+ }
+
+ .top{
+  padding:0 8px;
+ }
+
+ .brand{
+  font-size:15px;
+ }
+
+ .editor-actions{
+  flex-direction:column;
+ }
+
+ .chapter{
+  align-items:flex-start;
+ }
+
+ .chapter-actions{
+  flex-direction:column;
+ }
 }
 </style>
 </head>
@@ -113,87 +457,228 @@ h1,h2{margin-top:0}
 <body>
 
 <header class="top">
-<button class="brand" onclick="library()">📚 قارئ الروايات</button>
+
+<button class="brand" onclick="library()">
+📚 Novel Reader
+</button>
+
 <div class="tools">
 <button class="btn" onclick="font(-2)">A−</button>
 <button class="btn" onclick="font(0)">A</button>
 <button class="btn" onclick="font(2)">A+</button>
 <button class="btn" onclick="theme()">☾</button>
 </div>
+
 </header>
 
 <main>
 
+<!-- LIBRARY -->
+
 <section id="library">
+
 <div class="hero">
+
 <div>
-<h1>مكتبتك</h1>
-<p class="muted">أضف ملفات TXT الخاصة برواياتك وسيتم تقسيمها إلى فصول تلقائيًا.</p>
+<h1>My Library</h1>
+<p class="muted">
+Create your library and add chapters manually.
+</p>
 </div>
 
-<label class="add">
-+ إضافة رواية
-<input id="files" type="file" accept=".txt,text/plain" multiple hidden>
-</label>
+<button class="primary" onclick="openNovelModal()">
++ Add Novel
+</button>
+
 </div>
 
 <div id="empty" class="empty">
-<h2>📖 المكتبة فارغة</h2>
-<p>اختر ملف TXT لإضافة أول رواية.</p>
+<h2>📖 Your library is empty</h2>
+<p>Create your first novel to get started.</p>
 </div>
 
 <div id="grid" class="grid"></div>
+
 </section>
 
 
+<!-- CHAPTER LIST -->
+
 <section id="chapters" class="hidden">
 
-<button class="btn back" onclick="library()">→ المكتبة</button>
+<button class="btn back" onclick="library()">
+← Library
+</button>
 
 <div class="novel-head">
+
 <div>
-<p class="muted">الرواية</p>
+<p class="muted">Novel</p>
 <h1 id="novelTitle"></h1>
 <p id="novelInfo" class="muted"></p>
 </div>
 
-<button class="btn danger" onclick="deleteNovel()">حذف الرواية</button>
+<button class="btn danger" onclick="deleteNovel()">
+Delete Novel
+</button>
+
 </div>
 
+<button class="primary" onclick="openChapterEditor()">
++ Add Chapter
+</button>
+
+<div style="height:20px"></div>
+
 <div id="chapterList"></div>
+
 </section>
 
 
+<!-- CHAPTER EDITOR -->
+
+<section id="editorSection" class="hidden">
+
+<button class="btn back" onclick="showChapters()">
+← Back to Chapters
+</button>
+
+<div class="editor">
+
+<h1 id="editorHeading">Add Chapter</h1>
+
+<div class="form-group">
+
+<label for="chapterTitleInput">
+Chapter Title
+</label>
+
+<input
+ id="chapterTitleInput"
+ type="text"
+ placeholder="Example: Chapter One"
+/>
+
+</div>
+
+<div class="form-group">
+
+<label for="chapterTextInput">
+Chapter Text
+</label>
+
+<textarea
+ id="chapterTextInput"
+ placeholder="Paste your chapter here..."
+></textarea>
+
+</div>
+
+<div class="editor-actions">
+
+<button class="secondary" onclick="showChapters()">
+Cancel
+</button>
+
+<button class="primary" onclick="saveChapter()">
+Save Chapter
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- READER -->
+
 <section id="readerSection" class="hidden">
 
-<button class="btn back" onclick="showChapters()">→ الفصول</button>
+<button class="btn back" onclick="showChapters()">
+← Chapters
+</button>
 
 <article class="reader">
 
 <div class="reader-tools">
+
 <button class="btn" onclick="font(-2)">A−</button>
 <button class="btn" onclick="font(0)">A</button>
 <button class="btn" onclick="font(2)">A+</button>
 <button class="btn" onclick="theme()">☾</button>
+
 </div>
 
 <div class="heading">
+
 <div id="chapterLabel" class="label"></div>
+
 <h1 id="chapterTitle"></h1>
-<div id="chapterSubtitle" class="subtitle"></div>
+
 </div>
 
 <div id="content" class="content"></div>
 
 <div class="nav">
-<button id="prev" onclick="moveChapter(-1)">الفصل السابق</button>
-<button id="next" class="next" onclick="moveChapter(1)">الفصل التالي</button>
+
+<button id="prev" onclick="moveChapter(-1)">
+Previous Chapter
+</button>
+
+<button id="next" class="next" onclick="moveChapter(1)">
+Next Chapter
+</button>
+
 </div>
 
 </article>
+
 </section>
 
 </main>
+
+
+<!-- NOVEL MODAL -->
+
+<div id="novelModal" class="modal hidden">
+
+<div class="modal-box">
+
+<h2>Create New Novel</h2>
+
+<p class="muted">
+Enter the name of your novel.
+</p>
+
+<input
+ id="novelNameInput"
+ type="text"
+ placeholder="Novel title"
+/>
+
+<div class="modal-actions">
+
+<button
+ class="secondary"
+ onclick="closeNovelModal()"
+>
+Cancel
+</button>
+
+<button
+ class="primary"
+ onclick="createNovel()"
+>
+Create Novel
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 
 <div id="toast" class="toast"></div>
 
@@ -206,367 +691,777 @@ const STORE="novels";
 let novels=[];
 let current=null;
 let chapterIndex=0;
+let editingChapterIndex=null;
 
 let fontSize=Number(localStorage.getItem("fontSize")||20);
 let dark=localStorage.getItem("dark")==="1";
 
+
+/* DATABASE */
+
 function db(){
+
  return new Promise((resolve,reject)=>{
+
   let r=indexedDB.open(DB,1);
 
   r.onupgradeneeded=()=>{
-   if(!r.result.objectStoreNames.contains(STORE))
-    r.result.createObjectStore(STORE,{keyPath:"id"});
+
+   if(!r.result.objectStoreNames.contains(STORE)){
+
+    r.result.createObjectStore(
+     STORE,
+     {keyPath:"id"}
+    );
+
+   }
+
   };
 
   r.onsuccess=()=>resolve(r.result);
+
   r.onerror=()=>reject(r.error);
+
  });
+
 }
+
 
 async function all(){
+
  let d=await db();
+
  return new Promise((resolve,reject)=>{
-  let r=d.transaction(STORE,"readonly").objectStore(STORE).getAll();
+
+  let r=d
+   .transaction(STORE,"readonly")
+   .objectStore(STORE)
+   .getAll();
+
   r.onsuccess=()=>resolve(r.result);
+
   r.onerror=()=>reject(r.error);
+
  });
+
 }
+
 
 async function save(n){
+
  let d=await db();
+
  return new Promise((resolve,reject)=>{
+
   let t=d.transaction(STORE,"readwrite");
+
   t.objectStore(STORE).put(n);
+
   t.oncomplete=resolve;
+
   t.onerror=()=>reject(t.error);
+
  });
+
 }
+
 
 async function remove(id){
+
  let d=await db();
+
  return new Promise((resolve,reject)=>{
+
   let t=d.transaction(STORE,"readwrite");
+
   t.objectStore(STORE).delete(id);
+
   t.oncomplete=resolve;
+
   t.onerror=()=>reject(t.error);
+
  });
+
 }
+
 
 function id(){
- return Date.now()+"-"+Math.random().toString(16).slice(2);
+
+ return Date.now()+"-"+Math.random()
+  .toString(16)
+  .slice(2);
+
 }
 
-function normalize(t){
- return t.replace(/^\uFEFF/,"")
- .replace(/\r\n?/g,"\n")
- .replace(/\u00a0/g," ")
- .trim();
-}
 
-function isChapter(s){
- return /^chapter\s+(?:\d+|[ivxlcdm]+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)(?:\s*[:\-–—.]\s*.*)?$/i.test(s.trim());
-}
-
-function parse(text){
-
- text=normalize(text);
- let lines=text.split("\n");
- let starts=[];
-
- for(let i=0;i<lines.length;i++)
-  if(isChapter(lines[i])) starts.push(i);
-
- if(!starts.length){
-  return [{
-   label:"1",title:"",subtitle:"",
-   paragraphs:text.split(/\n\s*\n/).filter(Boolean)
-  }];
- }
-
- let result=[];
-
- for(let x=0;x<starts.length;x++){
-
-  let start=starts[x];
-  let end=x+1<starts.length?starts[x+1]:lines.length;
-
-  let heading=lines[start].trim();
-  let rest=heading.replace(/^chapter\s+/i,"").trim();
-
-  let title="";
-  let m=rest.match(/^(.+?)\s*[:\-–—.]\s+(.+)$/);
-
-  if(m){
-   rest=m[1];
-   title=m[2];
-  }
-
-  let body=lines.slice(start+1,end);
-
-  while(body.length&&!body[0].trim()) body.shift();
-
-  let subtitle="";
-
-  if(body.length&&body[0].trim()&&body[0].trim().length<=90
-     &&body.length>1&&!/[.!?]$/.test(body[0].trim())){
-   subtitle=body.shift().trim();
-
-   while(body.length&&!body[0].trim()) body.shift();
-  }
-
-  let paragraphs=body.join("\n")
-   .trim()
-   .split(/\n\s*\n/)
-   .map(x=>x.trim())
-   .filter(Boolean);
-
-  result.push({label:rest,title,subtitle,paragraphs});
- }
-
- return result;
-}
-
-function titleOf(name){
- return name.replace(/\.[^/.]+$/,"").replace(/_/g," ").trim();
-}
+/* UI */
 
 function toast(t){
+
  let e=document.getElementById("toast");
+
  e.textContent=t;
+
  e.classList.add("show");
- setTimeout(()=>e.classList.remove("show"),2200);
+
+ setTimeout(()=>{
+  e.classList.remove("show");
+ },2200);
+
 }
 
+
 function hide(){
- document.getElementById("library").classList.add("hidden");
- document.getElementById("chapters").classList.add("hidden");
- document.getElementById("readerSection").classList.add("hidden");
+
+ document
+  .getElementById("library")
+  .classList.add("hidden");
+
+ document
+  .getElementById("chapters")
+  .classList.add("hidden");
+
+ document
+  .getElementById("editorSection")
+  .classList.add("hidden");
+
+ document
+  .getElementById("readerSection")
+  .classList.add("hidden");
+
 }
+
 
 function library(){
 
  hide();
- document.getElementById("library").classList.remove("hidden");
+
+ document
+  .getElementById("library")
+  .classList.remove("hidden");
+
+ renderLibrary();
+
+}
+
+
+/* LIBRARY */
+
+function renderLibrary(){
 
  let grid=document.getElementById("grid");
+
  grid.innerHTML="";
 
- document.getElementById("empty").classList.toggle("hidden",novels.length>0);
+ document
+  .getElementById("empty")
+  .classList
+  .toggle("hidden",novels.length>0);
+
 
  novels.forEach(n=>{
 
   let c=document.createElement("div");
+
   c.className="card";
 
-  c.innerHTML=
-   "<h2>"+escape(n.title)+"</h2>"+
-   "<p class='muted'>"+n.chapters.length+
-   " فصلًا — آخر قراءة: الفصل "+
-   ((n.last||0)+1)+"</p>";
 
-  let a=document.createElement("div");
-  a.className="card-actions";
+  let title=document.createElement("h2");
+
+  title.textContent=n.title;
+
+
+  let info=document.createElement("p");
+
+  info.className="muted";
+
+  info.textContent=
+   n.chapters.length+
+   (n.chapters.length===1?" chapter":" chapters")+
+   " • Last read: "+
+   (n.chapters.length?("Chapter "+((n.last||0)+1)):"None");
+
+
+  let actions=document.createElement("div");
+
+  actions.className="card-actions";
+
 
   let go=document.createElement("button");
+
   go.className="continue";
-  go.textContent="متابعة القراءة";
-  go.onclick=()=>openReader(n,n.last||0);
+
+  go.textContent=
+   n.chapters.length?
+   "Continue Reading":
+   "Open Novel";
+
+  go.onclick=()=>{
+
+   if(n.chapters.length)
+    openReader(n,n.last||0);
+   else
+    openNovel(n);
+
+  };
+
 
   let list=document.createElement("button");
+
   list.className="secondary";
-  list.textContent="الفصول";
+
+  list.textContent="Chapters";
+
   list.onclick=()=>openNovel(n);
 
-  a.append(go,list);
-  c.append(a);
+
+  actions.append(go,list);
+
+  c.append(title,info,actions);
+
   grid.append(c);
+
  });
+
 }
 
-function escape(s){
- let d=document.createElement("div");
- d.textContent=s;
- return d.innerHTML;
+
+/* NOVEL CREATION */
+
+function openNovelModal(){
+
+ document
+  .getElementById("novelModal")
+  .classList
+  .remove("hidden");
+
+ document
+  .getElementById("novelNameInput")
+  .value="";
+
+ document
+  .getElementById("novelNameInput")
+  .focus();
+
 }
+
+
+function closeNovelModal(){
+
+ document
+  .getElementById("novelModal")
+  .classList
+  .add("hidden");
+
+}
+
+
+async function createNovel(){
+
+ let input=document
+  .getElementById("novelNameInput");
+
+ let title=input.value.trim();
+
+ if(!title){
+
+  toast("Please enter a novel title.");
+
+  return;
+
+ }
+
+
+ let n={
+
+  id:id(),
+
+  title:title,
+
+  chapters:[],
+
+  last:0,
+
+  added:Date.now()
+
+ };
+
+
+ await save(n);
+
+ novels.push(n);
+
+ closeNovelModal();
+
+ openNovel(n);
+
+ toast("Novel created.");
+
+}
+
+
+/* NOVEL */
 
 function openNovel(n){
 
  current=n;
 
  hide();
- document.getElementById("chapters").classList.remove("hidden");
 
- document.getElementById("novelTitle").textContent=n.title;
- document.getElementById("novelInfo").textContent=n.chapters.length+" فصلًا";
+ document
+  .getElementById("chapters")
+  .classList
+  .remove("hidden");
 
- let list=document.getElementById("chapterList");
+
+ document
+  .getElementById("novelTitle")
+  .textContent=n.title;
+
+
+ document
+  .getElementById("novelInfo")
+  .textContent=
+   n.chapters.length+
+   (n.chapters.length===1?" chapter":" chapters");
+
+
+ renderChapters();
+
+}
+
+
+function renderChapters(){
+
+ let list=document
+  .getElementById("chapterList");
+
  list.innerHTML="";
 
- n.chapters.forEach((c,i)=>{
 
-  let b=document.createElement("button");
-  b.className="chapter";
+ if(!current.chapters.length){
+
+  let empty=document.createElement("div");
+
+  empty.className="empty";
+
+  empty.innerHTML=
+   "<h2>No chapters yet</h2>"+
+   "<p>Add your first chapter to start reading.</p>";
+
+  list.append(empty);
+
+  return;
+
+ }
+
+
+ current.chapters.forEach((c,i)=>{
+
+  let row=document.createElement("div");
+
+  row.className="chapter";
+
 
   let num=document.createElement("span");
+
   num.className="num";
+
   num.textContent="#"+(i+1);
 
+
   let name=document.createElement("span");
+
   name.className="name";
-  name.textContent=c.title?
-   "Chapter "+c.label+" — "+c.title:
-   "Chapter "+c.label;
 
-  b.append(num,name);
+  name.textContent=c.title;
 
-  if(i===n.last){
-   let mark=document.createElement("small");
-   mark.textContent="آخر قراءة";
-   mark.className="muted";
-   b.append(mark);
-  }
 
-  b.onclick=()=>openReader(n,i);
-  list.append(b);
+  let actions=document.createElement("div");
+
+  actions.className="chapter-actions";
+
+
+  let read=document.createElement("button");
+
+  read.className="small-btn";
+
+  read.textContent="Read";
+
+  read.onclick=()=>openReader(current,i);
+
+
+  let edit=document.createElement("button");
+
+  edit.className="small-btn";
+
+  edit.textContent="Edit";
+
+  edit.onclick=()=>editChapter(i);
+
+
+  let del=document.createElement("button");
+
+  del.className="small-btn";
+
+  del.textContent="Delete";
+
+  del.onclick=()=>deleteChapter(i);
+
+
+  actions.append(read,edit,del);
+
+  row.append(num,name,actions);
+
+  list.append(row);
+
  });
+
 }
+
+
+/* CHAPTER EDITOR */
+
+function openChapterEditor(){
+
+ editingChapterIndex=null;
+
+ document
+  .getElementById("editorHeading")
+  .textContent="Add Chapter";
+
+ document
+  .getElementById("chapterTitleInput")
+  .value="";
+
+ document
+  .getElementById("chapterTextInput")
+  .value="";
+
+ hide();
+
+ document
+  .getElementById("editorSection")
+  .classList
+  .remove("hidden");
+
+ document
+  .getElementById("chapterTitleInput")
+  .focus();
+
+}
+
+
+function editChapter(i){
+
+ let c=current.chapters[i];
+
+ editingChapterIndex=i;
+
+ document
+  .getElementById("editorHeading")
+  .textContent="Edit Chapter";
+
+ document
+  .getElementById("chapterTitleInput")
+  .value=c.title;
+
+ document
+  .getElementById("chapterTextInput")
+  .value=c.text;
+
+ hide();
+
+ document
+  .getElementById("editorSection")
+  .classList
+  .remove("hidden");
+
+}
+
+
+async function saveChapter(){
+
+ let title=document
+  .getElementById("chapterTitleInput")
+  .value
+  .trim();
+
+ let text=document
+  .getElementById("chapterTextInput")
+  .value
+  .trim();
+
+
+ if(!title){
+
+  toast("Please enter a chapter title.");
+
+  return;
+
+ }
+
+
+ if(!text){
+
+  toast("Please enter the chapter text.");
+
+  return;
+
+ }
+
+
+ let chapter={
+
+  title:title,
+
+  text:text
+
+ };
+
+
+ if(editingChapterIndex===null){
+
+  current.chapters.push(chapter);
+
+  current.last=current.chapters.length-1;
+
+  toast("Chapter saved.");
+
+ }else{
+
+  current.chapters[editingChapterIndex]=chapter;
+
+  toast("Chapter updated.");
+
+ }
+
+
+ await save(current);
+
+ openNovel(current);
+
+}
+
+
+async function deleteChapter(i){
+
+ if(!confirm("Delete this chapter?"))return;
+
+ current.chapters.splice(i,1);
+
+ if(current.last>=current.chapters.length){
+
+  current.last=
+   Math.max(0,current.chapters.length-1);
+
+ }
+
+ await save(current);
+
+ renderChapters();
+
+ toast("Chapter deleted.");
+
+}
+
+
+/* READER */
 
 function showChapters(){
- if(current) openNovel(current);
+
+ if(current)
+  openNovel(current);
 }
+
 
 async function openReader(n,i){
 
+ if(!n.chapters.length)return;
+
  current=n;
+
  chapterIndex=i;
 
- n.last=i;
- await save(n);
+ current.last=i;
+
+ await save(current);
 
  hide();
- document.getElementById("readerSection").classList.remove("hidden");
+
+ document
+  .getElementById("readerSection")
+  .classList
+  .remove("hidden");
+
 
  let c=n.chapters[i];
 
- document.getElementById("chapterLabel").textContent=
-  "CHAPTER "+c.label;
 
- let title=document.getElementById("chapterTitle");
- title.textContent=c.title;
- title.classList.toggle("hidden",!c.title);
+ document
+  .getElementById("chapterLabel")
+  .textContent=
+   "CHAPTER "+(i+1);
 
- let sub=document.getElementById("chapterSubtitle");
- sub.textContent=c.subtitle;
- sub.classList.toggle("hidden",!c.subtitle);
 
- let content=document.getElementById("content");
+ document
+  .getElementById("chapterTitle")
+  .textContent=c.title;
+
+
+ let content=document
+  .getElementById("content");
+
  content.innerHTML="";
 
- c.paragraphs.forEach(p=>{
+
+ let paragraphs=c.text
+  .replace(/\r\n?/g,"\n")
+  .split(/\n\s*\n/)
+  .map(x=>x.trim())
+  .filter(Boolean);
+
+
+ paragraphs.forEach(p=>{
+
   let el=document.createElement("p");
+
   el.textContent=p;
+
   content.append(el);
+
  });
 
- document.getElementById("prev").disabled=i<=0;
- document.getElementById("next").disabled=i>=n.chapters.length-1;
+
+ document
+  .getElementById("prev")
+  .disabled=i<=0;
+
+
+ document
+  .getElementById("next")
+  .disabled=
+   i>=n.chapters.length-1;
+
 
  window.scrollTo(0,0);
+
 }
+
 
 function moveChapter(d){
 
  let x=chapterIndex+d;
 
- if(!current||x<0||x>=current.chapters.length)return;
+ if(
+  !current ||
+  x<0 ||
+  x>=current.chapters.length
+ )return;
 
  openReader(current,x);
+
 }
 
-function font(d){
 
- if(d===0) fontSize=20;
- else fontSize+=d;
-
- fontSize=Math.max(16,Math.min(28,fontSize));
-
- document.documentElement.style.setProperty("--size",fontSize+"px");
- localStorage.setItem("fontSize",fontSize);
-}
-
-function theme(){
-
- dark=!dark;
-
- document.body.classList.toggle("dark",dark);
- localStorage.setItem("dark",dark?"1":"0");
-}
+/* DELETE NOVEL */
 
 async function deleteNovel(){
 
  if(!current)return;
 
- if(!confirm("هل تريد حذف هذه الرواية من الجهاز؟"))return;
+ if(!confirm("Delete this novel and all its chapters?"))
+  return;
 
  await remove(current.id);
 
- novels=novels.filter(x=>x.id!==current.id);
+ novels=novels.filter(
+  x=>x.id!==current.id
+ );
+
  current=null;
 
  library();
- toast("تم حذف الرواية");
+
+ toast("Novel deleted.");
+
 }
 
-document.getElementById("files").addEventListener("change",async e=>{
 
- let files=[...e.target.files];
+/* SETTINGS */
 
- for(let file of files){
+function font(d){
 
-  try{
+ if(d===0)
+  fontSize=20;
+ else
+  fontSize+=d;
 
-   let text=await file.text();
-   let chapters=parse(text);
+ fontSize=
+  Math.max(
+   16,
+   Math.min(28,fontSize)
+  );
 
-   let old=novels.find(x=>x.source===file.name);
+ document
+  .documentElement
+  .style
+  .setProperty(
+   "--size",
+   fontSize+"px"
+  );
 
-   let n=old||{
-    id:id(),
-    title:titleOf(file.name),
-    source:file.name,
-    last:0,
-    added:Date.now()
-   };
+ localStorage.setItem(
+  "fontSize",
+  fontSize
+ );
 
-   n.chapters=chapters;
+}
 
-   await save(n);
 
-   if(!old)novels.push(n);
+function theme(){
 
-   toast("تمت إضافة "+n.title);
+ dark=!dark;
 
-  }catch(err){
-   console.error(err);
-   toast("حدث خطأ أثناء قراءة الملف");
-  }
- }
+ document
+  .body
+  .classList
+  .toggle("dark",dark);
 
- e.target.value="";
- library();
-});
+ localStorage.setItem(
+  "dark",
+  dark?"1":"0"
+ );
 
-document.body.classList.toggle("dark",dark);
+}
+
+
+/* INITIALIZATION */
+
+document
+ .body
+ .classList
+ .toggle("dark",dark);
+
 font(0);
 
+
 (async()=>{
+
  try{
+
   novels=await all();
+
  }catch(e){
+
   console.error(e);
+
+  novels=[];
+
  }
+
  library();
+
 })();
 
 </script>
